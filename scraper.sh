@@ -56,8 +56,6 @@ apkpure() {
 
 download_resources
 
-exit
-
 apkmirror "google-inc" \
           "youtube-music" \
           "com.google.android.apps.youtube.music" \
