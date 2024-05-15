@@ -14,6 +14,6 @@ foreach my $asset (@{$data->{assets}}) {
     my $name = $asset->{name};
     if ($name !~ /\.(asc|jar)$/) {
         my $url = $asset->{browser_download_url};
-        print "$name $url\n";
+        print "$url $name\n";
     }
 }
