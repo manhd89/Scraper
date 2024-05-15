@@ -14,7 +14,7 @@ req() {
 download_resources() {
     githubApiUrl="https://api.github.com/repos/revanced/revanced-patches/releases/latest"
     page=$(req - 2>/dev/null $githubApiUrl)
-    assetUrls=$(echo $page | jq -r '.assets[] | select(.name == patches.json | endswith(".asc") | not) | "\(.browser_download_url) \(.name)"')
+    assetUrls=$(echo $page | jq -r '.assets[] | select(.name == | endswith(".asc") | not) | "\(.browser_download_url) \(.name)"')
     while read -r downloadUrl assetName; do
         req "$assetName" "$downloadUrl" 
     done <<< "$assetUrls"
