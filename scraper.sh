@@ -12,7 +12,7 @@ req() {
 }
 
 download_resources() {
-    githubApiUrl="https://api.github.com/repos/revanced/revanced-patches/releases/latest"
+    githubApiUrl="https://api.github.com/repos/inotia00/revanced-patches/releases/latest"
     page=$(req - 2>/dev/null $githubApiUrl)
     assetUrls=$(echo $page | jq -r '.assets[] | select(.name | endswith(".asc") | not) | "\(.browser_download_url) \(.name)"')
     while read -r downloadUrl assetName; do
@@ -61,9 +61,9 @@ apkmirror "google-inc" \
           "com.google.android.apps.youtube.music" \
           "arm64-v8a"          
 
-apkmirror "google-inc" "youtube" "com.google.android.youtube"
-
-apkmirror "tiktok-pte-ltd" "tik-tok-including-musical-ly" "com.zhiliaoapp.musically"
+apkmirror "google-inc" \
+          "youtube" \
+          "com.google.android.youtube"
 
 apkpure "youtube-music" \
         "com.google.android.apps.youtube.music" 
