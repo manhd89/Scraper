@@ -23,7 +23,7 @@ download_resources() {
 # Best but sometimes not work because APKmirror protection 
 apkmirror() {
     org="$1" name="$2" package="$3" arch="${4:-universal}" dpi="${5:-nodpi}"
-    version=$(echo patches.json | perl utils/extract_supported_version.pl "$package")
+    version=$(cat patches.json | perl utils/extract_supported_version.pl "$package")
     echo $version
     return 
     url="https://www.apkmirror.com/uploads/?appcategory=$name"
