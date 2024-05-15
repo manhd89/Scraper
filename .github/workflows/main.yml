@@ -1,0 +1,29 @@
+name: Scraper 
+on:
+  push:
+  workflow_dispatch:
+    
+jobs:
+  build:
+    name: Scraper 
+    permissions: write-all
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+      GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@main  
+
+    - name: Scraper 
+      run: bash scraper.sh
+             
+    - name: Delete workflow runs
+      uses: Mattraks/delete-workflow-runs@v2
+      with:
+        token: ${{ github.token }}
+        repository: ${{ github.repository }}
+        retain_days: 0
+        keep_minimum_runs: 1
