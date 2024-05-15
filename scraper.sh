@@ -14,7 +14,7 @@ req() {
 download_resources() {
     githubApiUrl="https://api.github.com/repos/inotia00/revanced-patches/releases/latest"
     page=$(req - 2>/dev/null $githubApiUrl)
-    assetUrls=$(echo $page | jq -r '.assets[] | select(.name | endswith(".asc") | not) | "\(.browser_download_url) \(.name)"')
+    assetUrls=$(echo $page | perl utils/extract_github.pl)
     while read -r downloadUrl assetName; do
         req "$assetName" "$downloadUrl" 
     done <<< "$assetUrls"
@@ -55,6 +55,8 @@ apkpure() {
 }
 
 download_resources
+
+exit
 
 apkmirror "google-inc" \
           "youtube-music" \
