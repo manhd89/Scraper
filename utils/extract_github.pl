@@ -14,6 +14,6 @@ foreach my $asset (@{$data->{assets}}) {
     my $name = $asset->{name};
     if ($name !~ /\.asc$/) {
         my $url = $asset->{browser_download_url};
-        print "$url $name\n";
+        print "$name $url\n";
     }
 }
