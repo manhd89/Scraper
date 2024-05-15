@@ -1,5 +1,4 @@
 #!/bin/bash
-api="https://api.revanced.app/v2/patches/latest"
 
 req() {
     wget --header="User-Agent: Mozilla/5.0 (Android 13; Mobile; rv:125.0) Gecko/125.0 Firefox/125.0" \
@@ -10,6 +9,15 @@ req() {
          --header="Cache-Control: max-age=0" \
          --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8" \
          --keep-session-cookies --timeout=30 -nv -O "$@"
+}
+
+download_resources() {
+    githubApiUrl="https://api.github.com/repos/revanced/revanced-patches/releases/latest"
+    page=$(req - 2>/dev/null $githubApiUrl)
+    assetUrls=$(echo $page | jq -r '.assets[] | select(.name == patches.json | endswith(".asc") | not) | "\(.browser_download_url) \(.name)"')
+    while read -r downloadUrl assetName; do
+        req "$assetName" "$downloadUrl" 
+    done <<< "$assetUrls"
 }
 
 # Best but sometimes not work because APKmirror protection 
@@ -47,30 +55,26 @@ apkpure() {
     req $name-v$version.apk $url
 }
 
+download_resources
+
+exit
 apkmirror "google-inc" \
           "youtube-music" \
           "com.google.android.apps.youtube.music" \
           "arm64-v8a"          
-unset version 
 
 apkmirror "google-inc" "youtube" "com.google.android.youtube"
-unset version
 
 apkmirror "tiktok-pte-ltd" "tik-tok-including-musical-ly" "com.zhiliaoapp.musically"
-unset version
 
 apkpure "youtube-music" \
         "com.google.android.apps.youtube.music" 
-unset version
 
 apkpure "youtube" \
         "com.google.android.youtube" 
-unset version
 
 uptodown "youtube-music" \
          "com.google.android.apps.youtube.music" 
-unset version
 
 uptodown "youtube" \
          "com.google.android.youtube"
-unset version
