@@ -16,7 +16,7 @@ my $data = decode_json($json_text);
 my %versions;
 
 # Iterate over each patch in the JSON data
-foreach my $patch (@{$data->{'patches'}}) {
+foreach my $patch (@{$data}) {
     my $compatible_packages = $patch->{'compatiblePackages'};
     
     # Check if compatiblePackages is a non-empty list
@@ -43,4 +43,4 @@ my $latest_version = (sort {$b cmp $a} keys %versions)[0];
 # Print the latest version
 if ($latest_version) {
     print "$latest_version\n";
-} 
+}
