@@ -22,7 +22,7 @@ download_resources() {
 
 # Best but sometimes not work because APKmirror protection 
 apkmirror() {
-    org="$1" name="$2" package="$3" arch="${4:-universal}" dpi="${5:-nodpi}"
+    org="$1" name="$2" package="$3" arch="$4" dpi="${5:-nodpi}"
     version=$(cat patches.json | perl utils/extract_supported_version.pl "$package")
     url="https://www.apkmirror.com/uploads/?appcategory=$name"
     version="${version:-$(req - $url | perl utils/apkmirror_versions.pl | perl utils/largest_version.pl)}"
