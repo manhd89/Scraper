@@ -12,7 +12,7 @@ my $data = decode_json($json_text);
 # Extract download links and assets name
 foreach my $asset (@{$data->{assets}}) {
     my $name = $asset->{name};
-    if ($name !~ /\.asc$/) {
+    if ($name !~ /\.(asc|jar)$/) {
         my $url = $asset->{browser_download_url};
         print "$name $url\n";
     }
