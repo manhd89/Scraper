@@ -23,7 +23,9 @@ download_resources() {
 # Best but sometimes not work because APKmirror protection 
 apkmirror() {
     org="$1" name="$2" package="$3" arch="${4:-universal}" dpi="${5:-nodpi}"
-    version=$(req - 2>/dev/null $api | perl utils/extract_supported_version.pl "$package")
+    version=$(echo patches.json | perl utils/extract_supported_version.pl "$package")
+    echo $version
+    return 
     url="https://www.apkmirror.com/uploads/?appcategory=$name"
     version="${version:-$(req - $url | perl utils/apkmirror_versions.pl | perl utils/largest_version.pl)}"
     url="https://www.apkmirror.com/apk/$org/$name/$name-${version//./-}-release"
@@ -57,7 +59,6 @@ apkpure() {
 
 download_resources
 
-exit
 apkmirror "google-inc" \
           "youtube-music" \
           "com.google.android.apps.youtube.music" \
@@ -66,6 +67,8 @@ apkmirror "google-inc" \
 apkmirror "google-inc" "youtube" "com.google.android.youtube"
 
 apkmirror "tiktok-pte-ltd" "tik-tok-including-musical-ly" "com.zhiliaoapp.musically"
+
+exit
 
 apkpure "youtube-music" \
         "com.google.android.apps.youtube.music" 
