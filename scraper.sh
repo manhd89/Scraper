@@ -12,7 +12,7 @@ req() {
 }
 
 download_resources() {
-    githubApiUrl="https://api.github.com/repos/inotia00/revanced-patches/releases/latest"
+    githubApiUrl="https://api.github.com/repos/revanced/revanced-patches/releases/latest"
     page=$(req - 2>/dev/null $githubApiUrl)
     assetUrls=$(echo $page | perl utils/extract_github.pl)
     while read -r downloadUrl assetName; do
